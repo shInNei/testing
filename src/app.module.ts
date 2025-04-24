@@ -3,22 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { QuestionsModule } from './questions/questions.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'postgres.railway.internal',
       port: 5432,
       username: 'postgres',
-      password: 'Thinh@2004',
-      database: 'iqtranhdau',
+      password: 'QRlPGbXOkEXfFJntiAvDNyeIubUXkoGT',
+      database: 'railway',
       entities: [],
       synchronize: true
     }),
     UserModule,
-    QuestionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
