@@ -9,7 +9,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'postgres.railway.internal',
-      port: 5432,
+      port: 8080,
       username: 'postgres',
       password: 'QRlPGbXOkEXfFJntiAvDNyeIubUXkoGT',
       database: 'railway',
