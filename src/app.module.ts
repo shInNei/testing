@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
       password: 'npg_2m5tRTILbZhU',
       database: 'neondb',
       entities: [],
-      synchronize: true
+      synchronize: false
     }),
     UserModule,
   ],
