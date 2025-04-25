@@ -8,11 +8,11 @@ import { UserModule } from './user/user.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgres.railway.internal',
+      host: 'ep-summer-heart-a44q153f-pooler.us-east-1.aws.neon.tech',
       port: 5432,
-      username: 'postgres',
-      password: 'QRlPGbXOkEXfFJntiAvDNyeIubUXkoGT',
-      database: 'railway',
+      username: 'neondb_owner',
+      password: 'npg_2m5tRTILbZhU',
+      database: 'neondb',
       entities: [],
       synchronize: true
     }),
