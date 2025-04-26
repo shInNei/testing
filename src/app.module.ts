@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config'; // Thêm ConfigModule
 import { UserModule } from './user/user.module';
+import { BattleModule } from './battle/battle.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { UserModule } from './user/user.module';
       synchronize: true,
     }),
     UserModule,
-    
+    BattleModule
   ],
   controllers: [AppController],
   providers: [AppService],
