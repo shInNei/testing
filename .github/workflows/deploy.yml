@@ -30,12 +30,13 @@ jobs:
     # - name: Build project
     #   run: npm run build
 
-    - name: Trigger Render deploy via API
-      run: |
-        curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-        -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
-        -H "Content-Type: application/json" \
-        -d '{
-          "clear_cache": true, 
-          "build_only": false
-        }'
+    - name: Deploy to Render
+      uses: JorgeLNJunior/render-deploy@v1.4.5
+      with:
+        service_id: ${{ secrets.RENDER_SERVICE_ID }}  # Your Render service ID
+        api_key: ${{ secrets.RENDER_TOKEN }}\        # Your Render API key
+        clear_cache: true                             # Optional: Clear Render's build cache
+        wait_deploy: true                             # Optional: Wait for deploy completion
+        github_deployment: false                      # Optional: Create GitHub deployment
+        deployment_environment: 'production'         # Optional: Specify deployment environment
+        github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
