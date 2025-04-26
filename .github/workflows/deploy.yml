@@ -1,0 +1,42 @@
+name: Deploy NestJS to Render
+
+on:
+  push:
+    branches:
+      - main  # or your main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'  # or your Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Generate Prisma client
+      run: npx prisma generate
+
+    - name: Run tests
+      run: npm run test
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to Render
+      env:
+        RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+        SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+      run: |
+        curl -X POST "https://api.render.com/v1/services/${SERVICE_ID}/deploys" \
+        -H "Accept: application/json" \
+        -H "Authorization: Bearer $RENDER_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d '{}'
