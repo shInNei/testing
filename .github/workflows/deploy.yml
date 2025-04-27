@@ -66,7 +66,7 @@ jobs:
         README_FILE="README.md"
         echo "Updating version badge to $VERSION_TAG"
     
-        # Replace the version number in the badge URL
+        # Replace the version number part of the badge URL
         sed -i "s|tag/[a-zA-Z0-9._-]*|tag/$VERSION_TAG|g" $README_FILE
         
         # Check the result of the update in README.md
@@ -79,4 +79,3 @@ jobs:
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
