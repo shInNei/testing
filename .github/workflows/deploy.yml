@@ -61,7 +61,7 @@ jobs:
 # Update the README version badge
     - name: Update README version badge
       run: |
-        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}  # Get the version from the previous step
+        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}  # Get the new version tag
         README_FILE="README.md"
         # Replace old badge URL with the new one in the README file
         sed -i "s|https://img.shields.io/github/v/tag/.*|https://img.shields.io/github/v/tag/${GITHUB_REPOSITORY}?label=version&style=flat-square|g" $README_FILE
@@ -72,3 +72,4 @@ jobs:
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
