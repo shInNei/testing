@@ -44,6 +44,7 @@ jobs:
     #     github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
     
     - name: Bump version and push tag
+      id: bump-version
       uses: phips28/gh-action-bump-version@v9.0.3
       with:
         commit-message: "ci: bump version to {{version}}"
