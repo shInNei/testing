@@ -8,15 +8,16 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    permissions:
+      deployments: write
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    # - name: Checkout repository
+    #   uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'  # or your Node.js version
+    # - name: Setup Node.js
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: '20'  # or your Node.js version
 
     # - name: Install dependencies
     #   run: npm install
@@ -37,6 +38,6 @@ jobs:
         api_key: ${{ secrets.RENDER_TOKEN }}\        # Your Render API key
         clear_cache: true                             # Optional: Clear Render's build cache
         wait_deploy: true                             # Optional: Wait for deploy completion
-        github_deployment: false                      # Optional: Create GitHub deployment
+        github_deployment: true                      # Optional: Create GitHub deployment
         deployment_environment: 'production'         # Optional: Specify deployment environment
         github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
