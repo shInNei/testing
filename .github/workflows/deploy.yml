@@ -57,4 +57,38 @@ jobs:
         tag_name: ${{ steps.bump-version.outputs.newTag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
+    - name: Update README version badge
+      run: |
+        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}
+        README_FILE="README.md"
+        # Check if README exists
+        if [ ! -f "$README_FILE" ]; then
+          echo "Error: $README_FILE not found"
+          exit 1
+        fi
+        # Define expected badge URL
+        EXPECTED_URL="https://img.shields.io/github/v/tag/${GITHUB_REPOSITORY}?label=version"
+        # Update badge URL if necessary (cross-platform sed)
+        if ! grep -q "$EXPECTED_URL" "$README_FILE"; then
+          echo "Updating badge URL to $EXPECTED_URL"
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            sed -i '' "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
+          else
+            sed -i "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
+          fi
+        else
+          echo "Badge URL is already correct"
+        fi
+        # Commit changes if any
+        if ! git diff --quiet "$README_FILE"; then
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$README_FILE"
+          git commit -m "docs: update version badge to $VERSION_TAG"
+          git push || { echo "Error: Failed to push changes"; exit 1; }
+        else
+          echo "No changes to README badge, skipping commit"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
