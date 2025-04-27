@@ -41,3 +41,19 @@ jobs:
         github_deployment: true                      # Optional: Create GitHub deployment
         deployment_environment: 'production'         # Optional: Specify deployment environment
         github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
+    
+    - name: Bump version and push tag
+      id: bump-version
+      uses: phips28/gh-action-bump-version@v9.0.3
+      with:
+        commit-message: "ci: bump version to {{version}}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.bump-version.outputs.newTag }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    

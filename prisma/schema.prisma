@@ -21,6 +21,7 @@ model User {
   phone_num String?  @db.VarChar(255)
   lever     Int      @db.Integer
   elo       Int?     @db.Integer
+  role      String   @db.VarChar(255)
 
   // Back-relations
   battlesAsPlayer1 Battle[] @relation("BattlePlayer1")
