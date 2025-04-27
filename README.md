@@ -1,4 +1,5 @@
-![Version Badge](https://img.shields.io/github/v/tag/0.0.15/testing?label=versionhttps://img.shields.io/github/v/tag/0.0.15/testing?label=version)style=flat-square
+![Version Badge](https://img.shields.io/github/v/tag/shInNei/testing?label=version)
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
