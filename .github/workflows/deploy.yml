@@ -58,24 +58,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-# Update the README version badge
-# Update the README version badge with the new version number
-    - name: Update README version badge
-      run: |
-        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}  # Get the new version tag
-        README_FILE="README.md"
-        echo "Updating version badge to $VERSION_TAG"
-    
-        # Replace the version number part of the badge URL
-        sed -i "s|tag/[a-zA-Z0-9._-]*|tag/$VERSION_TAG|g" $README_FILE
-        
-        # Check the result of the update in README.md
-        cat $README_FILE
-    
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add $README_FILE
-        git commit -m "docs: update version badge to $VERSION_TAG"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
