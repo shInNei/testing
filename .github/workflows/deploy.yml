@@ -70,15 +70,11 @@ jobs:
         # Define expected badge URL
         EXPECTED_URL="https://img.shields.io/github/v/tag/${GITHUB_REPOSITORY}?label=version"
         # Update badge URL if necessary (cross-platform sed)
-        if ! grep -q "$EXPECTED_URL" "$README_FILE"; then
           echo "Updating badge URL to $EXPECTED_URL"
-          if [[ "$RUNNER_OS" == "macOS" ]]; then
-            sed -i '' "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
-          else
-            sed -i "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
-          fi
+        if [[ "$RUNNER_OS" == "macOS" ]]; then
+          sed -i '' "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
         else
-          echo "Badge URL is already correct"
+          sed -i "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
         fi
         # Commit changes if any
         if ! git diff --quiet "$README_FILE"; then
