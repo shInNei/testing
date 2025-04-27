@@ -1,4 +1,4 @@
-![Version Badge](https://img.shields.io/github/v/tag/shInNei/testing?label=version)
+![Version Badge](https://img.shields.io/github/v/tag_name/shInNei/testing?label=version)
 
 
 
