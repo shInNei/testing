@@ -44,7 +44,7 @@ jobs:
     
     - name: Bump version and push tag
       id: bump-version
-      uses: phips28/gh-action-bump-version@v9.0.3
+      uses: phips28/gh-action-bump-version@master
       with:
         commit-message: "ci: bump version to {{version}}"
       env:
