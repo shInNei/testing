@@ -58,3 +58,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+    # Update the README version badge
+    - name: Update README version badge
+      run: |
+        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}
+        README_FILE="README.md"
+        # Replace old badge URL with the new one in the README file
+        sed -i "s|https://img.shields.io/github/v/tag/.*|https://img.shields.io/github/v/tag/${GITHUB_REPOSITORY}?label=version&style=flat-square|" $README_FILE
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add $README_FILE
+        git commit -m "docs: update version badge to $VERSION_TAG"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
