@@ -32,16 +32,16 @@ jobs:
     # - name: Build project
     #   run: npm run build
 
-    - name: Deploy to Render
-      uses: JorgeLNJunior/render-deploy@v1.4.5
-      with:
-        service_id: ${{ secrets.RENDER_SERVICE_ID }}  # Your Render service ID
-        api_key: ${{ secrets.RENDER_API_KEY }}        # Your Render API key
-        clear_cache: true                             # Optional: Clear Render's build cache
-        wait_deploy: true                             # Optional: Wait for deploy completion
-        github_deployment: true                      # Optional: Create GitHub deployment
-        deployment_environment: 'production'         # Optional: Specify deployment environment
-        github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
+    # - name: Deploy to Render
+    #   uses: JorgeLNJunior/render-deploy@v1.4.5
+    #   with:
+    #     service_id: ${{ secrets.RENDER_SERVICE_ID }}  # Your Render service ID
+    #     api_key: ${{ secrets.RENDER_API_KEY }}        # Your Render API key
+    #     clear_cache: true                             # Optional: Clear Render's build cache
+    #     wait_deploy: true                             # Optional: Wait for deploy completion
+    #     github_deployment: true                      # Optional: Create GitHub deployment
+    #     deployment_environment: 'production'         # Optional: Specify deployment environment
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}     # GitHub token for GitHub actions
     
     - name: Bump version and push tag
       id: bump-version
@@ -58,33 +58,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Update README version badge
-      run: |
-        VERSION_TAG=${{ steps.bump-version.outputs.newTag }}
-        README_FILE="README.md"
-        # Check if README exists
-        if [ ! -f "$README_FILE" ]; then
-          echo "Error: $README_FILE not found"
-          exit 1
-        fi
-        # Define expected badge URL
-        EXPECTED_URL="https://img.shields.io/github/v/tag/${GITHUB_REPOSITORY}?label=version"
-        # Update badge URL if necessary (cross-platform sed)
-          echo "Updating badge URL to $EXPECTED_URL"
-        if [[ "$RUNNER_OS" == "macOS" ]]; then
-          sed -i '' "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
-        else
-          sed -i "s|https://img.shields.io/github/v/tag/[^?]*\?label=version.*|$EXPECTED_URL|" "$README_FILE"
-        fi
-        # Commit changes if any
-        if ! git diff --quiet "$README_FILE"; then
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add "$README_FILE"
-          git commit -m "docs: update version badge to $VERSION_TAG"
-          git push || { echo "Error: Failed to push changes"; exit 1; }
-        else
-          echo "No changes to README badge, skipping commit"
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
